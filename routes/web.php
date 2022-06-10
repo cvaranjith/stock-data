@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\stock;
+use App\Models\products;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/',[stock::class, 'available']);
 
 Route::get('/add', [stock::class, 'add']);
 
+Route::get('/product', function (){
+    return view('product');
+});
+Route::post('/productstore', [stock::class, 'productAdd']);
 
 Route::get('/out', [stock::class, 'out']);
 
