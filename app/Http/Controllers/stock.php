@@ -10,6 +10,29 @@ use Illuminate\Support\Facades\Log;
 
 class stock extends Controller
 {
+  public function available(){
+    $available = products::all()->take(4);
+    return view('home', compact('available'));
+  }
+
+
+
+  public function productAdd(Request $request){
+    $request->validate([
+      'name' => 'required',
+      'qty' => 'required'
+    ]);
+
+    $product = new products();
+    $product->product = $request->name;
+    $product->stock_available = $request->qty;
+    $product->save();
+    if($product){
+      return back()->with('success', "Successfully Added!");
+    }else{
+      return $this->sendError('Unauthorised',  ['error'=>'Product name already Exist.']);
+    }
+  }
 
   public function add(){
    
@@ -86,42 +109,7 @@ class stock extends Controller
     }
   }
 
-  // public function release(Request $request)
-  // {
-  //   $request->validate([
-  //     'product' => 'required',
-  //     'out'      => 'required',
-  //     'qty'     => 'required'
-  //   ]);
-
-
-  //   $stockOut          = new stock_out();
-  //   $product = $request->product;
-  
-
-  //   $stockIn = stock_in::select()
-  //               ->where("stock_ins.product", $product)
-  //               ->sum('stock_ins.qty');
-  //   if (!empty($stockIn)) {
-     
-  //       if ($request->qty <= $stockIn) {
-  //           $stockOut->product = $request->product;
-  //           $stockOut->date     = $request->out;
-  //           $stockOut->Qty     = $request->qty;
-  //           $stockOut->save();
-  //           if($stockOut){
-  //               return back()->with('success', "Successfully Added!");
-  //           }else{
-  //               return back()->with('error', "insert Failed");
-  //           }
-            
-  //       } else {
-  //       return back()->with('error', "Quantity is heigher than total product quantity");
-  //     }
-  //   } else {
-  //     return back()->with('error', "No Product there..");
-  //   }
-  // }
+ 
 
   public function report_list(Request $request)
   {

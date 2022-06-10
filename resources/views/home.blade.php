@@ -17,6 +17,11 @@
             <div class="card shadow">
                 <div class="card-header text-center">
                     <h3>Stock</h3>
+                  <div class="col-md-12">
+                      <div class="row justify-content-end">
+                        <a href="{{url('product')}}"><button class="btn btn-success">Add Product</button></a>
+                      </div>
+                  </div>
                 </div>
                 <div class="card-content">
                     <div class="col-md-12 mt-3 mb-3">
@@ -31,6 +36,39 @@
                 </div>
             </div>
         </div>
+    </div>
+    <br>
+    <br>
+    <div class="col-md-12">
+ 
+            <div class="col-md-6 mx-auto">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h3>Available Stock</h3>
+                    </div>
+                    <div class="card-content">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sr no</th>
+                                    <th>Product Name</th>
+                                    <th>Stock Available</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ( $available as $stock )
+                                    <tr>
+                                        <td>{{$stock->id}}</td>
+                                        <td>{{$stock->product}}</td>
+                                        <td>{{$stock->stock_available}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
     </div>
 </body>
 </html>
